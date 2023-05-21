@@ -1,19 +1,31 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('./index.js');
+const { DataTypes,Sequelize } = require('sequelize');
 
-const Employee = sequelize.define('Employee', {
-  firstName: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  lastName: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  department: {
-    type: DataTypes.STRING,
-    allowNull: false
+class Employee extends Sequelize.Model {
+  static init(sequelize, DataTypes) {
+    return super.init({
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      department: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+    }, {
+      sequelize
+    });
   }
-}, {});
+
+  static associate(models) {
+    this.hasMany(models.Task, {
+      foreignKey: 'employeeId',
+      as: 'tasks',
+    });
+  }
+}
 
 module.exports = Employee;

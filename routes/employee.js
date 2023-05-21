@@ -12,6 +12,24 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET single employee with their tasks
+router.get('/:id', async (req, res) => {
+    try {
+      const employee = await Employee.findOne({
+        where: { id: req.params.id },
+        include: [Task]
+      });
+      if (employee) {
+        res.json(employee);
+      } else {
+        res.status(404).json({ message: "Employee not found" });
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+  
+
 // POST a new employee
 router.post('/', async (req, res) => {
     try {
