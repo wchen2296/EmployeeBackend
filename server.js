@@ -1,48 +1,41 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const sequelize = require('./models/index'); 
-const Employee = require('./models/employee'); 
-const Task = require('./models/task'); 
+const employeeRoutes = require('./routes/employee'); 
+const taskRoutes = require('./routes/task'); 
 
 // Sync the models with the database
 sequelize.sync()
   .then(() => console.log('Database & tables created!'));
 
-// Create a new express application instance
+
 const app = express();
 
-// The port the express app will listen on
-const port = process.env.PORT || 3001;
 
-// parse requests of content-type - application/json
+const port =  3001;
+
+
 app.use(bodyParser.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// simple route
+
 app.get('/', (req, res) => {
     res.json({ message: "Welcome to your application." });
 });
 
-// An example route for all employees
-app.get('/employees', async (req, res, next) => {
-    try {
-        const employees = await Employee.findAll();
-        res.json(employees);
-    } catch (err) {
-        next(err);
-    }
-});
+// Use routes
+app.use('/employees', employeeRoutes);
+app.use('/tasks', taskRoutes);
 
-// Handle not found error
+// Error handling middleware
 app.use((req, res, next) => {
     const err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.json({
@@ -51,7 +44,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Start your express server
+// Start server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}.`);
 });
