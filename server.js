@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const sequelize = require('./models/index'); 
+const {sequelize} = require('./models/index'); 
 const employeeRoutes = require('./routes/employee'); 
 const taskRoutes = require('./routes/task'); 
 
