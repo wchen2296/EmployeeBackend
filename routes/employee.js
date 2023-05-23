@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Employee = require('../models/employee');
+const { Employee, Task } = require('../models/index');
 
 // GET all employees
 router.get('/', async (req, res) => {
@@ -17,7 +17,7 @@ router.get('/:id', async (req, res) => {
     try {
       const employee = await Employee.findOne({
         where: { id: req.params.id },
-        include: [Task]
+        include: [{ model: Task, as: 'tasks' }]
       });
       if (employee) {
         res.json(employee);

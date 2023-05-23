@@ -20,7 +20,7 @@ class Task extends Sequelize.Model {
       employeeId: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'Employee', 
+          model: 'Employees', 
           key: 'id',
         }
       },

@@ -2,6 +2,7 @@ const { Sequelize } = require('sequelize');
 const EmployeeModel = require('./employee');
 const TaskModel = require('./task');
 
+
 const sequelize = new Sequelize('employeedb', 'postgres', 'password', {
   host: 'localhost',
   dialect: 'postgres'

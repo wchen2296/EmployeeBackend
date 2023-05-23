@@ -3,6 +3,10 @@ const bodyParser = require('body-parser');
 const {sequelize} = require('./models/index'); 
 const employeeRoutes = require('./routes/employee'); 
 const taskRoutes = require('./routes/task'); 
+const cors = require('cors');
+
+
+
 
 // Sync the models with the database
 sequelize.sync()
@@ -14,7 +18,7 @@ const app = express();
 
 const port =  3001;
 
-
+app.use(cors());
 app.use(bodyParser.json());
 
 
