@@ -14,11 +14,12 @@ class Task extends Sequelize.Model {
       },
       completionStatus: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
+        allowNull: true, 
+        defaultValue: false 
       },
       employeeId: {
         type: DataTypes.INTEGER,
+        allowNull: true, 
         references: {
           model: 'Employees', 
           key: 'id',

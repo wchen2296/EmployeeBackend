@@ -2,7 +2,18 @@ const express = require('express');
 const router = express.Router();
 const Task = require('../models/task');
 const Employee = require('../models/employee');
-
+ 
+//get unassigned tasks
+router.get('/unassigned', async (req, res) => {
+ try {
+      const unassignedTasks = await Task.findAll({ where: { employeeId: null } });
+      res.json(unassignedTasks);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
 
 // GET all tasks
 router.get('/', async (req, res) => {
@@ -72,6 +83,7 @@ router.post('/', async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   });
+
 
 
 module.exports = router;
